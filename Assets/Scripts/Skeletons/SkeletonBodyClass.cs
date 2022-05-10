@@ -18,14 +18,20 @@ public class SkeletonBodyClass : MonoBehaviour,IAlive,ISkeletonBody
 [SerializeField] protected float _jumpForce;
 [SerializeField] Transform bottom;
 [SerializeField] protected bool _withTorch;
+[SerializeField] protected bool _isJumping = false;
 [SerializeField] protected GameObject _torchPosition;
 private ISphereCheckProvider _groundCheck;
 [SerializeField] protected bool _grounded;
 [SerializeField] private LayerMask _groundLayer;
 [SerializeField] private float _groundCheckRaius;
 
+[SerializeField] protected PhysicsMaterial2D _zeroFrictionMat;
+[SerializeField] protected PhysicsMaterial2D _fullFrictionMat;
+
+private MovementSlopeHandler _slopeHandler;
     private void Awake()
     {   _groundCheck = GetComponent<ISphereCheckProvider>();
+        _slopeHandler = GetComponent<MovementSlopeHandler>();
          UIInputHandler.skeletonJumpButton.onClick.AddListener(delegate{
         if (_grounded)
             {
@@ -60,33 +66,42 @@ private ISphereCheckProvider _groundCheck;
     }
     protected void Grounded(){
         _grounded = _groundCheck.CheckLayer(bottom,_groundCheckRaius,_groundLayer);
+        if(_grounded && _rb.velocity.y <= 0)_isJumping = false;
     }
     protected virtual void SkeletonMovement(float _speed)
     {
         
-        if(!_isDestroyed && _grounded){
+        if(!_isDestroyed && _grounded && _isJumping == false){
 
          _pos = _rb.transform.position;
          var hor = UIInputHandler.horJoy.Horizontal;
-         
+         Vector2 movVector = new Vector2(0,0);
         if (hor > 0)
         {
-            Vector2 movVector = new Vector2(hor,0);
-            _rb.AddForce(movVector*_speed,ForceMode2D.Impulse);
+            movVector = new Vector2(hor,0);
             LostEndurence(_enduranceLostByMoving*(hor/10));
         }
         if (hor < 0)
         {
-            Vector2 movVector = new Vector2(hor,0);
-            _rb.AddForce(movVector*_speed,ForceMode2D.Impulse);
+            movVector = new Vector2(hor,0);
             LostEndurence(_enduranceLostByMoving*(-hor/10));
         }
-        
-            }
+        if(_slopeHandler.OnSlope == false){
+            _rb.sharedMaterial = _fullFrictionMat;
+            _rb.velocity = new Vector2(movVector.x*_speed,_rb.velocity.y);
+            
+        }
+        if(_slopeHandler.OnSlope){
+            _rb.sharedMaterial = _zeroFrictionMat;
+            _rb.velocity = new Vector2(movVector.x*_slopeHandler.SlopeNormalPerp.x*_speed,_slopeHandler.SlopeNormalPerp.y*_rb.velocity.y);
+             }
+       }
     }
 
     protected virtual void SkeletonJump(){
         if( !_isDestroyed){
+            _isJumping = true;
+        _rb.sharedMaterial = _fullFrictionMat;
         _rb.AddForce(new Vector2(0,_jumpForce),ForceMode2D.Impulse);
         LostEndurence(25f);
         }

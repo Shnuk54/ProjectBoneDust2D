@@ -14,7 +14,7 @@ public static class PlayerStats
    [SerializeField] public static float doubleJumpForce{get;private set;} = 100f;
 
     // Skeleton
-   [SerializeField] public static float speedSkeleton{get;private set;} = 0.3f;
+   [SerializeField] public static float speedSkeleton{get;private set;} = 4f;
    [SerializeField] public static float endurenceSkeleton{get;private set;} = 100f;
 
     [SerializeField] public static int itemsFound{get;private set;}
