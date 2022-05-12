@@ -45,8 +45,8 @@
      <Compile Include="Packages\com.unity.2d.animation\Runtime\BufferManager.cs" />
      <Compile Include="Packages\com.unity.2d.animation\Runtime\TransformAccessJob.cs" />
      <Compile Include="Packages\com.unity.2d.animation\Runtime\NativeArrayHelper.cs" />
-     <Compile Include="Packages\com.unity.2d.animation\Runtime\SpriteSkinManager.cs" />
      <Compile Include="Packages\com.unity.2d.animation\Runtime\AssemblyInfo.cs" />
+     <Compile Include="Packages\com.unity.2d.animation\Runtime\SpriteSkinManager.cs" />
      <Compile Include="Packages\com.unity.2d.animation\Runtime\SpriteSkinUtility.cs" />
      <Compile Include="Packages\com.unity.2d.animation\Runtime\SpriteLib\SpriteLibrary.cs" />
      <Compile Include="Packages\com.unity.2d.animation\Runtime\NativeCustomSlice.cs" />

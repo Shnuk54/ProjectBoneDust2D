@@ -1636,6 +1636,7 @@ GameObject:
   - component: {fileID: 6978930994161657742}
   - component: {fileID: 897644423}
   - component: {fileID: 5288104131659151999}
+  - component: {fileID: 1459210528}
   m_Layer: 6
   m_Name: WeakSkeleton
   m_TagString: SkeletonBody
@@ -1759,6 +1760,7 @@ MonoBehaviour:
   _jumpForce: 2
   bottom: {fileID: 2204992409622380142}
   _withTorch: 0
+  _isJumping: 0
   _torchPosition: {fileID: 6316162019548643914}
   _grounded: 0
   _groundLayer:
@@ -1817,6 +1819,18 @@ CapsuleCollider2D:
   m_Offset: {x: 0.86, y: 3.88}
   m_Size: {x: 2.66, y: 7.54}
   m_Direction: 0
+--- !u!114 &1459210528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7705523322227181691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a685a98e092c4f4492a981293fe8460, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7905389128271404344
 GameObject:
   m_ObjectHideFlags: 0

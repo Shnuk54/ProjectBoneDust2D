@@ -74,6 +74,7 @@
      <Compile Include="Assets\Scripts\Skeletons\WeakSkeleton.cs" />
      <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\DynamicJoystick.cs" />
      <Compile Include="Assets\Joystick Pack\Scripts\Base\Joystick.cs" />
+     <Compile Include="Assets\Scripts\MovementSlopeHandler.cs" />
      <Compile Include="Assets\Scripts\GroundCheckProvider.cs" />
      <Compile Include="Assets\Scripts\Audio\Sound.cs" />
      <Compile Include="Assets\Scripts\Player\Movement\SkullMovement.cs" />
@@ -96,7 +97,8 @@
      <Compile Include="Assets\Scripts\Player\DrawTrajecroty.cs" />
      <Compile Include="Assets\Scripts\Effects\Particle.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerSpawnController.cs" />
-     <Compile Include="Assets\Scripts\MovementSlopeHandler.cs" />
+     <Compile Include="Assets\Scripts\Animations\AnimationState.cs" />
+     <Compile Include="Assets\Scripts\Animations\AnimatorState.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

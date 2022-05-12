@@ -361,6 +361,8 @@
 "Assets/Joystick Pack/Scripts/Joysticks/FixedJoystick.cs"
 "Assets/Joystick Pack/Scripts/Joysticks/FloatingJoystick.cs"
 "Assets/Joystick Pack/Scripts/Joysticks/VariableJoystick.cs"
+"Assets/Scripts/Animations/AnimationState.cs"
+"Assets/Scripts/Animations/AnimatorState.cs"
 "Assets/Scripts/Audio/AudioManager.cs"
 "Assets/Scripts/Audio/MusicManager.cs"
 "Assets/Scripts/Audio/Sound.cs"
