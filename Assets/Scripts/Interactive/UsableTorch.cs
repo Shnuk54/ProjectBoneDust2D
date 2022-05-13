@@ -5,38 +5,42 @@ using UnityEngine.UI;
 
 public class UsableTorch : MonoBehaviour
 {
-    [SerializeField] protected float _lifeTime;
-    [SerializeField] WeakSkeleton skeleton;
-    [SerializeField] float distanceToUse;
+    [SerializeField] private WeakSkeleton _skeleton;
+    [SerializeField] private float _distanceToUse;
     private bool _used;
+  
 
-    private void ChangeParent(GameObject newParent)=>this.transform.parent = newParent.transform;
+
+    private void ChangeParent(GameObject newParent){
+        this.transform.parent = newParent.transform;
+        this.transform.position = newParent.transform.position;}
     
 
-    
-        
   private void OnMouseUp()
   {
        if(FindObjectOfType<PlayerController>().IsSkeleton && !_used && FindObjectOfType<WeakSkeleton>()!= null){
-           
-            skeleton = FindObjectOfType<WeakSkeleton>();
-            if(Vector3.Distance(skeleton.transform.position,this.transform.position) <= distanceToUse )
+            _skeleton = FindObjectOfType<WeakSkeleton>();
+            if(Vector3.Distance(_skeleton.transform.position,this.transform.position) <= _distanceToUse )
             {
              _used = true;
-            ChangeParent(skeleton.GetTorchPosition);
+            ChangeParent(_skeleton.GetTorchPosition);
             }
-           
-        }
+       }
   }
-
-
    
-    private void OnDestroyed(){
-        if(_used){
-        this.GetComponent<Rigidbody>().isKinematic = false;
-        this.GetComponent<Collider>().isTrigger = false;
-        }
-        
+    void FixedUpdate() {
+        if(!_used)return;
+        if(this.transform.position != _skeleton.GetTorchPosition.transform.position)this.transform.position = _skeleton.GetTorchPosition.transform.position;
     }
-    
+    void OnEnable() {
+        Events.onPlayerChangeState += Destroy;
+    }
+    void OnDisable() {
+        Events.onPlayerChangeState -= Destroy;
+    }
+    private void Destroy(PlayerState state){
+        if(state == PlayerState.Skull && _used){
+            Destroy(this.gameObject);
+        }
+    }
 }

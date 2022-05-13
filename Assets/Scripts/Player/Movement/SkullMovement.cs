@@ -105,7 +105,7 @@ public class SkullMovement : MonoBehaviour
         {   
             if (PlayerController.canJumpFromBody) DrawTrajecroty.singleton.UpdateTrajectory(ForceV, _rb, _transform.position);
         }
-        Debug.Log("CanJumpFromBody"+PlayerController.canJumpFromBody);
+        
     }
 
     private void OnMouseUp()
@@ -135,7 +135,7 @@ public class SkullMovement : MonoBehaviour
         {
             if (PlayerController.canJumpFromBody && _force.x != 0 && _force.y != 0)
             {
-                Debug.Log("JumpFromBody"+PlayerController.canJumpFromBody);
+               
                 maxForce = _maxForce;
                 PlayerStateController.singleton.ChangePlayerState(PlayerState.Skull);
                 PlayerController.canJumpFromBody = false;

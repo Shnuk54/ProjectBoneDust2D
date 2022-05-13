@@ -1761,7 +1761,7 @@ MonoBehaviour:
   bottom: {fileID: 2204992409622380142}
   _withTorch: 0
   _isJumping: 0
-  _torchPosition: {fileID: 6316162019548643914}
+  _torchPosition: {fileID: 1618559502394884529}
   _grounded: 0
   _groundLayer:
     serializedVersion: 2

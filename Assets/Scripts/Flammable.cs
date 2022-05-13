@@ -7,7 +7,7 @@ public  class Flammable : MonoBehaviour,ISaveable
     [SerializeField] protected float _flameTime;
     [SerializeField] protected Material _fireShader;
     protected Vector3 _position;
-    protected MeshRenderer _renderer;
+    protected SpriteRenderer _renderer;
     [SerializeField] protected bool _inFlame = false; 
     protected Material _curMat;
    [SerializeField] protected bool _destroyed;
@@ -15,7 +15,7 @@ public  class Flammable : MonoBehaviour,ISaveable
     private void Awake()
     {
         _position = this.transform.position;
-        _renderer = GetComponent<MeshRenderer>();
+        _renderer = GetComponent<SpriteRenderer>();
         _curMat = _renderer.sharedMaterial;
 
         
@@ -37,7 +37,7 @@ public  class Flammable : MonoBehaviour,ISaveable
         newMat[1] = _fireShader;
         _renderer.sharedMaterials = newMat;
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "Torch" && !_inFlame){
             _inFlame = true;

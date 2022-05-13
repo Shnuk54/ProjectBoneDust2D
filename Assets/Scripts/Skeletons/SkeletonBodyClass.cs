@@ -79,10 +79,12 @@ private MovementSlopeHandler _slopeHandler;
         if (hor > 0)
         {
             movVector = new Vector2(hor,0);
+            transform.rotation = Quaternion.Euler(0,0,0);
             LostEndurence(_enduranceLostByMoving*(hor/10));
         }
         if (hor < 0)
         {
+            transform.rotation = Quaternion.Euler(0,180,0);
             movVector = new Vector2(hor,0);
             LostEndurence(_enduranceLostByMoving*(-hor/10));
         }

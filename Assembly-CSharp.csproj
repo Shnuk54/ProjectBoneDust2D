@@ -48,6 +48,7 @@
      <Compile Include="Assets\Scripts\Scenes\ChangeSceneTrigger.cs" />
      <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
      <Compile Include="Assets\Scripts\Game\ICollectable.cs" />
+     <Compile Include="Assets\Scripts\Animations\AnimationState.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerStats.cs" />
      <Compile Include="Assets\Scripts\Interface\ISkeletonBody.cs" />
      <Compile Include="Assets\Scripts\Traps\SpikeTrap.cs" />
@@ -66,6 +67,7 @@
      <Compile Include="Assets\Scripts\Interactive\MoveblItem.cs" />
      <Compile Include="Assets\Scripts\Interactive\UsableTorch.cs" />
      <Compile Include="Assets\Scripts\Interactive\Teleport.cs" />
+     <Compile Include="Assets\Scripts\Animations\AnimatorState.cs" />
      <Compile Include="Assets\Joystick Pack\Examples\JoystickPlayerExample.cs" />
      <Compile Include="Assets\Scripts\Events.cs" />
      <Compile Include="Assets\Scripts\Interactive\SpringPlatform.cs" />
@@ -97,8 +99,6 @@
      <Compile Include="Assets\Scripts\Player\DrawTrajecroty.cs" />
      <Compile Include="Assets\Scripts\Effects\Particle.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerSpawnController.cs" />
-     <Compile Include="Assets\Scripts\Animations\AnimationState.cs" />
-     <Compile Include="Assets\Scripts\Animations\AnimatorState.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
