@@ -111,6 +111,9 @@ private MovementSlopeHandler _slopeHandler;
 
    public void Death(){
         _isDestroyed = true;
+        PlayerController.canJumpFromBody = true;
+        UIInputHandler.EnableHorJoy(true);
+        Destroy(this.gameObject,0.5f);
     }
     public void Heal(float heal){
 

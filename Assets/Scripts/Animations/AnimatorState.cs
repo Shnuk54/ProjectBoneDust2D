@@ -20,7 +20,6 @@ public class AnimatorState : MonoBehaviour
     public void AddAnimations(params AnimationState[] anims){
         foreach(AnimationState anim in anims){
             this._animations.Add(anim.animName,anim);
-            Debug.Log(anim.animName);
         }
     }
 
