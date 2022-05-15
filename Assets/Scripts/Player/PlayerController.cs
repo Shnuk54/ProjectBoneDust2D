@@ -73,9 +73,10 @@ public class PlayerController : MonoBehaviour,ISaveable,IAlive,ISkull
     }
 
    
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter2D(Collider2D other)
         {
             if(other.tag == "Checkpoint"){
+                Debug.Log("Checkpoint");
                 usedCheckpoint = true;
                 spawnpoint = other.transform.position;
                FindObjectOfType<PlayerSpawnController>().ChangeCurrentSceneIndex(MenuManager.GetCurrentScene());
@@ -168,6 +169,8 @@ public class PlayerController : MonoBehaviour,ISaveable,IAlive,ISkull
             var saveData = (SaveData)state;
             UISlidersHandler.SetSliderValue(PlayerStats.healthPoint,PlayerStats.healthPoint,UISlidersHandler.healthSlider);
             _hp = PlayerStats.healthPoint;
+            spawnpoint = new Vector3(saveData.posX,saveData.posY,0);
+
     }
 
     [Serializable]

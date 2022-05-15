@@ -36,15 +36,16 @@ public class PlayerSpawnController : MonoBehaviour,ISaveable
     void  OnSceneLoaded(Scene scene, LoadSceneMode mode){
         if(PlayerController.usedCheckpoint == false){
             PlayerController.spawnpoint = GameObject.FindGameObjectWithTag("StartPos").transform.position;
-            _player.ChangePosition(PlayerController.spawnpoint);
+            Debug.Log("Spawn start pos");
         }else{
             _player.ChangePosition(PlayerController.spawnpoint);
+            Debug.Log("Spawn checkpoint");
         }
        FindObjectOfType<PlayerController>().SetupPlayer();
     }
     
     void OnActiveSceneChanged(Scene scene, Scene scene1){
-        PlayerController.usedCheckpoint = false;
+        //PlayerController.usedCheckpoint = false;
     }
 
     public object CaptureState(){
