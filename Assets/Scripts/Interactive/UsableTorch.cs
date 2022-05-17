@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UsableTorch : MonoBehaviour
+public class UsableTorch : MonoBehaviour,IUseble
 {
     [SerializeField] private WeakSkeleton _skeleton;
     [SerializeField] private float _distanceToUse;
@@ -18,7 +18,16 @@ public class UsableTorch : MonoBehaviour
 
   private void OnMouseUp()
   {
-       if(FindObjectOfType<PlayerController>().IsSkeleton && !_used && FindObjectOfType<WeakSkeleton>()!= null){
+       Use();
+  }
+   
+    void FixedUpdate() {
+        if(!_used)return;
+        if(this.transform.position != _skeleton.GetTorchPosition.transform.position)this.transform.position = _skeleton.GetTorchPosition.transform.position;
+    }
+
+    public void Use() {
+    if(FindObjectOfType<PlayerController>().IsSkeleton && !_used && FindObjectOfType<WeakSkeleton>()!= null){
             _skeleton = FindObjectOfType<WeakSkeleton>();
             if(Vector3.Distance(_skeleton.transform.position,this.transform.position) <= _distanceToUse )
             {
@@ -26,12 +35,8 @@ public class UsableTorch : MonoBehaviour
             ChangeParent(_skeleton.GetTorchPosition);
             }
        }
-  }
-   
-    void FixedUpdate() {
-        if(!_used)return;
-        if(this.transform.position != _skeleton.GetTorchPosition.transform.position)this.transform.position = _skeleton.GetTorchPosition.transform.position;
     }
+
     void OnEnable() {
         Events.onPlayerChangeState += Destroy;
     }
