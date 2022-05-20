@@ -2262,7 +2262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00552a01e60ac5d428bf7c0e3a34860e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  saveName: TestSave10
+  saveName: TestSave11
   playerSaves: []
 --- !u!4 &1922982118
 Transform:
@@ -2291,6 +2291,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentScene: 0
+  savedScene: 0
+  spawnPoint: {x: 0, y: 0}
 --- !u!114 &1922982120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2634,9 +2636,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 49585513}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: LoadNextScene
+      - m_Target: {fileID: 1922982119}
+        m_TargetAssemblyTypeName: PlayerSpawnController, Assembly-CSharp
+        m_MethodName: LoadSavedScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5120,7 +5122,7 @@ MonoBehaviour:
   _force: {x: 0, y: 0, z: 0}
   _transform: {fileID: 0}
   _playerDrag: 0
-  _rollingSpeed: 0
+  _rollingSpeed: 1.93
   groundCheckRadius: 1.56
   groundLayer:
     serializedVersion: 2

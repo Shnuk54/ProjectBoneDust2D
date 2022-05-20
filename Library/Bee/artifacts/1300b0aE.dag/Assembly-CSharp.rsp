@@ -392,6 +392,7 @@
 "Assets/Scripts/Interface/ISkeletonBody.cs"
 "Assets/Scripts/Interface/ISkull.cs"
 "Assets/Scripts/Interface/ISphereCheckProvider.cs"
+"Assets/Scripts/Interface/IUseble.cs"
 "Assets/Scripts/MovementSlopeHandler.cs"
 "Assets/Scripts/Player/DrawTrajecroty.cs"
 "Assets/Scripts/Player/JumpThroughBottomPlatform.cs"

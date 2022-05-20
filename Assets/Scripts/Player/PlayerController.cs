@@ -4,10 +4,9 @@ using System.Collections;
 using UnityEngine.Events;
 using System;
 using UnityEngine.SceneManagement;
-public class PlayerController : MonoBehaviour,ISaveable,IAlive,ISkull
+public class PlayerController : MonoBehaviour,IAlive,ISkull
 {
     [SerializeField] private  Rigidbody2D _rb;
-    public static Vector3 spawnpoint = new Vector3(11,10,0);
     public static bool usedCheckpoint = false;
     private bool _dead;
     private  bool _isSkeleton = false;
@@ -32,7 +31,6 @@ public class PlayerController : MonoBehaviour,ISaveable,IAlive,ISkull
         _hp = PlayerStats.healthPoint;
         UISlidersHandler.SetSliderValue(_hp,PlayerStats.healthPoint,UISlidersHandler.healthSlider);
         _isSkeleton = false;
-        SaveLoad.singleton.Load();
         PlayerStateController.singleton.ChangePlayerState(PlayerState.Skull);
     }
     public void SetupPlayer(){
@@ -50,7 +48,6 @@ public class PlayerController : MonoBehaviour,ISaveable,IAlive,ISkull
     }
 
     public  void TakeDamage(float damage){
-        Debug.Log("Damage:"+damage);
         if(!_canTakeDamage)return;
         if(_hp-damage <= 0){
             Death();
@@ -76,12 +73,12 @@ public class PlayerController : MonoBehaviour,ISaveable,IAlive,ISkull
         private void OnTriggerEnter2D(Collider2D other)
         {
             if(other.tag == "Checkpoint"){
-                Debug.Log("Checkpoint");
                 usedCheckpoint = true;
-                spawnpoint = other.transform.position;
                FindObjectOfType<PlayerSpawnController>().ChangeCurrentSceneIndex(MenuManager.GetCurrentScene());
-                 UISlidersHandler.SetSliderValue(PlayerStats.healthPoint,PlayerStats.healthPoint,UISlidersHandler.healthSlider);
-                 _hp = PlayerStats.healthPoint;
+               UISlidersHandler.SetSliderValue(PlayerStats.healthPoint,PlayerStats.healthPoint,UISlidersHandler.healthSlider);
+               _hp = PlayerStats.healthPoint;
+               Events.instance.OnPlayerUseCheckpoint(other.transform.position.x,other.transform.position.y,MenuManager.GetCurrentScene());
+               SaveLoad.singleton.Save();
             }
         }
 
@@ -151,35 +148,6 @@ public class PlayerController : MonoBehaviour,ISaveable,IAlive,ISkull
     {   
         _hp = PlayerStats.healthPoint;
         Events.instance.OnPlayerChangeHealth(_hp,PlayerStats.healthPoint,UISlidersHandler.healthSlider);
-        gameObject.transform.position = new Vector3(spawnpoint.x, spawnpoint.y, gameObject.transform.position.z);
-    }
-
-
-
-    public object CaptureState(){
-             return new SaveData{
-            hp = _hp, 
-            posX = spawnpoint.x,
-            posY = spawnpoint.y,
-            posZ = spawnpoint.z
-        };
-    }
-    
-    public void RestoreState(object state){
-            var saveData = (SaveData)state;
-            UISlidersHandler.SetSliderValue(PlayerStats.healthPoint,PlayerStats.healthPoint,UISlidersHandler.healthSlider);
-            _hp = PlayerStats.healthPoint;
-            spawnpoint = new Vector3(saveData.posX,saveData.posY,0);
-
-    }
-
-    [Serializable]
-    private struct SaveData
-    {
-        public float hp;
-        public float posX;
-        public float posY;
-        public float posZ;
     }
 
     

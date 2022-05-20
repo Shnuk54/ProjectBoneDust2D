@@ -6,10 +6,11 @@ using UnityEngine.UI;
 public class Events : MonoBehaviour
 {
     public static Events instance;
-     public static event UnityAction<PlayerState> onPlayerChangeState;
-      public static event UnityAction<float> onPlayerTakeDamage;
-      public static event UnityAction<float,float,Slider> onPlayerChangeHealth;
-      public static event UnityAction<float,float,Slider> onLostEndurance;
+    public static event UnityAction<PlayerState> onPlayerChangeState;
+    public static event UnityAction<float> onPlayerTakeDamage;
+    public static event UnityAction<float,float,Slider> onPlayerChangeHealth;
+    public static event UnityAction<float,float,Slider> onLostEndurance;
+    public static event UnityAction<float,float,int> onUseCheckpoint;
     private void Awake()
     {  
         if(instance != null && instance != this)
@@ -19,6 +20,11 @@ public class Events : MonoBehaviour
     public void OnPlayerChangeState(PlayerState state){
         if(onPlayerChangeState != null){
             onPlayerChangeState(state);
+        }
+    }
+    public void OnPlayerUseCheckpoint(float posX,float posY,int sceneIndex){
+        if(onUseCheckpoint != null){
+            onUseCheckpoint(posX,posY,sceneIndex);
         }
     }
      public void OnPlayerTakeDamage(float damage){

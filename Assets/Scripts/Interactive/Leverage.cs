@@ -1,24 +1,30 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class Leverage : MonoBehaviour,ISaveable
+public class Leverage : MonoBehaviour,ISaveable,IUseble
 {
 
-    [SerializeField] private PlayerController player;
+    private PlayerController _player;
     [SerializeField] private OpenableDoor door;
     [SerializeField] private bool _isActivated = false;
+    [SerializeField] GameObject _leverage;
+    [SerializeField] float _minDistanceToUse = 10f;
 
     private void Start()
     {
-        player = FindObjectOfType<PlayerController>();
+        _player = FindObjectOfType<PlayerController>();
     }
     private void OnMouseUp()
     {
-         if (_isActivated == false && player.IsSkeleton)
+         Use();
+    }
+
+    public void Use(){
+        if (_isActivated == false && _player.IsSkeleton && Vector3.Distance(_player.transform.position,this.transform.position)<= _minDistanceToUse)
             {
                 _isActivated = true;
                 door.OpenDoorByleverage();
-                gameObject.transform.rotation = new Quaternion(0, 90, 0, 0);
+                _leverage.transform.rotation = new Quaternion(0, 0, 65, 0);
             }
     }
     public bool isActivated

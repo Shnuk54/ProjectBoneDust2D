@@ -5,7 +5,9 @@ using UnityEngine.SceneManagement;
 public class PlayerSpawnController : MonoBehaviour,ISaveable
 {
    
-   [SerializeField] private  int currentScene; 
+     [SerializeField] private  int currentScene; 
+     [SerializeField] private int savedScene;
+     [SerializeField] Vector2 spawnPoint;
     public static PlayerSpawnController singleton {get;private set;}
     private PlayerController _player;
     private void Awake()
@@ -13,55 +15,67 @@ public class PlayerSpawnController : MonoBehaviour,ISaveable
         if(!singleton){
         singleton = this;
         DontDestroyOnLoad(this);
-        SceneManager.sceneLoaded += OnSceneLoaded;
-        SceneManager.activeSceneChanged += OnActiveSceneChanged;
         }
         else{
         Destroy(gameObject);
         }
     }
+    void OnEnable() {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        Events.onUseCheckpoint += PlayerSaved;
+    }
+    void OnDisable() {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        Events.onUseCheckpoint -= PlayerSaved;
+    }
     void Start()
-
-    {   SaveLoad.singleton.Load();
-        if( currentScene != 0 && MenuManager.GetCurrentScene() != 0){
-        MenuManager.LoadSceneByIndex(currentScene);
-        }
+    {  
         _player = FindObjectOfType<PlayerController>();
-       
+        SaveLoad.singleton.Load();
+        if( MenuManager.GetCurrentScene() != 0){
+        MenuManager.LoadSceneByIndex(savedScene);
+        }
+    }
+    public void LoadSavedScene(){
+         MenuManager.LoadSceneByIndex(savedScene);
     }
     public  void ChangeCurrentSceneIndex(int index){
         currentScene = index;
     }
-
+    private void PlayerSaved(float posX, float posY,int sceneIndex){
+        spawnPoint = new Vector2(posX,posY);
+        savedScene = sceneIndex;
+    }
     void  OnSceneLoaded(Scene scene, LoadSceneMode mode){
-        if(PlayerController.usedCheckpoint == false){
-            PlayerController.spawnpoint = GameObject.FindGameObjectWithTag("StartPos").transform.position;
-            Debug.Log("Spawn start pos");
+        if(MenuManager.GetCurrentScene() != savedScene){
+            spawnPoint = GameObject.FindGameObjectWithTag("StartPos").transform.position;
+            _player.ChangePosition(spawnPoint);
         }else{
-            _player.ChangePosition(PlayerController.spawnpoint);
-            Debug.Log("Spawn checkpoint");
+            _player.ChangePosition(spawnPoint);
         }
-       FindObjectOfType<PlayerController>().SetupPlayer();
     }
     
-    void OnActiveSceneChanged(Scene scene, Scene scene1){
-        //PlayerController.usedCheckpoint = false;
-    }
+   
 
     public object CaptureState(){
              return new SaveData{
-                currentScene = MenuManager.GetCurrentScene()
+                savedScene = savedScene,
+                posX = spawnPoint.x,
+                posY = spawnPoint.y
         };
     }
     
     public void RestoreState(object state){
             var saveData = (SaveData)state;
-           currentScene = saveData.currentScene;
+            savedScene = saveData.savedScene;
+            spawnPoint = new Vector2(saveData.posX,saveData.posY);
     }
 
     [System.Serializable]
     private struct SaveData
     {
-      public int currentScene;
+     public int savedScene;
+     public float posX;
+     public float posY;
     }
 }
