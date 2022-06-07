@@ -146,6 +146,7 @@ public class PlayerController : MonoBehaviour,IAlive,ISkull
 
     private void Respawn()
     {   
+        ChangePosition(PlayerSpawnController.singleton.spawnPoint);
         _hp = PlayerStats.healthPoint;
         Events.instance.OnPlayerChangeHealth(_hp,PlayerStats.healthPoint,UISlidersHandler.healthSlider);
     }

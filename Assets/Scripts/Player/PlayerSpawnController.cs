@@ -7,7 +7,7 @@ public class PlayerSpawnController : MonoBehaviour,ISaveable
    
      [SerializeField] private  int currentScene; 
      [SerializeField] private int savedScene;
-     [SerializeField] Vector2 spawnPoint;
+     [SerializeField] public Vector2 spawnPoint{get;private set;}
     public static PlayerSpawnController singleton {get;private set;}
     private PlayerController _player;
     private void Awake()
@@ -37,6 +37,7 @@ public class PlayerSpawnController : MonoBehaviour,ISaveable
         }
     }
     public void LoadSavedScene(){
+        if(savedScene == 0)savedScene = 1;
          MenuManager.LoadSceneByIndex(savedScene);
     }
     public  void ChangeCurrentSceneIndex(int index){

@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
 public class DrawTrajecroty : MonoBehaviour
 {
     [SerializeField] private LineRenderer _lineRenderer;
     [SerializeField] [Range(3, 30)] private int _lineSegmentCount = 20;
-
+    [SerializeField] float _drawingTime;
     private List<Vector3> _linePoints = new List<Vector3>();
 
-    #region Singleton
     public static DrawTrajecroty singleton;
-
+    private CameraFollow _camFollow;
     private void Awake()
     {
          if(!singleton){
@@ -20,9 +19,10 @@ public class DrawTrajecroty : MonoBehaviour
         else{
             Destroy(this.gameObject);
         }
+        _camFollow = FindObjectOfType<CameraFollow>();
     }
 
-    #endregion
+
     private void Start()
     {
         _lineRenderer = gameObject.GetComponent<LineRenderer>();
@@ -41,7 +41,6 @@ public class DrawTrajecroty : MonoBehaviour
 
         if (velocity.y < 0)
         {
-            //Типа пофиксил
             FlightDuration = -1;
         }
 
@@ -60,10 +59,18 @@ public class DrawTrajecroty : MonoBehaviour
 
         _lineRenderer.positionCount = _linePoints.Count;
         _lineRenderer.SetPositions(_linePoints.ToArray());
+        if(_drawingTime > 2){
+        _camFollow.lookForward = true;
+        _camFollow.targetPos = new Vector3(_linePoints[10].x,_linePoints[10].y,-1);
+        }
+        
+        _drawingTime+= Time.deltaTime;
+        
     }
 
     public void HideLine()
-    {
+    {   _drawingTime = 0;
         _lineRenderer.positionCount = 0;
+        _camFollow.Reset();
     }
 }

@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 public class SkullMovement : MonoBehaviour
 {
-    [SerializeField] Vector3 mousePressDownPos;
-    [SerializeField] Vector3 mouseReleasePos;
+    [SerializeField] Vector2 mousePressDownPos;
+    [SerializeField] Vector2 mouseReleasePos;
     [SerializeField] private  Rigidbody2D _rb;
     public static bool _isSkeleton{get;private set;} = false;
     public static bool _canJumpFromBody = false;
@@ -42,6 +42,8 @@ public class SkullMovement : MonoBehaviour
     _layerCheck = GetComponent<ISphereCheckProvider>();
     _rb = GetComponent<Rigidbody2D>();
     _transform = GetComponent<Transform>();
+
+
     }
     private void Awake()
     {
@@ -54,27 +56,48 @@ public class SkullMovement : MonoBehaviour
     private void FixedUpdate()
     { 
         var hor = UIInputHandler.horJoy.Horizontal;
+
          _grounded = _layerCheck.CheckLayer(this.transform,groundCheckRadius,groundLayer);
+
         if(_grounded) _canDobleJump = true;
+
          if(_screenIsTouched == false && _isSkeleton == false && _grounded){
-            
             if(PhonePositionController.PhonePosition().x > 0.2f || PhonePositionController.PhonePosition().x < -0.2f){
                 _rb.AddForce(new Vector2(PhonePositionController.PhonePosition().x*_rollingSpeed,0),ForceMode2D.Force);
          }
     }   
-         
+            
     }
-
+    void Update() {
+        Movement();
+    }
+    private void Movement(){
+        if(Input.touchCount > 0){
+             Touch touch =  Input.GetTouch(0);
+             if (touch.phase == TouchPhase.Began)
+                {
+            OnMouseDown();
+                }
+           
+            if(touch.phase == TouchPhase.Moved){
+                OnMouseDrag();
+            }
+            if (touch.phase == TouchPhase.Ended){
+                OnMouseUp();
+            }
+        }
+    }
       private void OnMouseDown()
     {
-        mousePressDownPos = Input.mousePosition;
+        Touch touch = Input.GetTouch(0);
+        mousePressDownPos = touch.position;
         _screenIsTouched = true;
     }
 
 
     private void OnMouseDrag()
-    {   
-        Vector3 ForceInit = (Input.mousePosition - mousePressDownPos);
+    {    Touch touch = Input.GetTouch(0);
+        Vector3 ForceInit = (touch.position - mousePressDownPos);
         maxForce = _maxForce;
 
         if (ForceInit.x > maxForce) ForceInit.x = maxForce;
@@ -111,7 +134,8 @@ public class SkullMovement : MonoBehaviour
     private void OnMouseUp()
     {
         DrawTrajecroty.singleton.HideLine();
-        mouseReleasePos = Input.mousePosition;
+        Touch touch = Input.GetTouch(0);
+        mouseReleasePos = touch.position;
         _force = mouseReleasePos - mousePressDownPos;
 
         if (!_player.IsSkeleton)

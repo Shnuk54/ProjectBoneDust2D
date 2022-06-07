@@ -5,6 +5,7 @@ using UnityEngine;
 public class SkeletonParts : MonoBehaviour,ISaveable
 {
    [SerializeField] private bool _isUsed;
+   [SerializeField] ParticleSystem _particle;
    public Skeleton  skeleton;
 
 private void Start()
@@ -15,7 +16,8 @@ private void Start()
 
     private void Collect(){
      PlayerItemsSystem.singleton.CollectSkeletonPart(this);
-    Destroy(this.gameObject);
+     _particle.Play();
+     Destroy(this.gameObject,2f);
   }
     private void OnTriggerEnter2D(Collider2D other)
     {
